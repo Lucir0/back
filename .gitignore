@@ -1,0 +1,9 @@
+
+node_modules/
+
+
+# Ignore les fichiers logs
+*.log
+
+# Ignore les fichiers de sauvegarde
+*~
