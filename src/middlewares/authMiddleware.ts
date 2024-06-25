@@ -1,10 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import userService from '../services/userService';
+import { CustomRequest } from '../types/CustomRequest';
 
-interface CustomRequest extends Request {
-  user?: any;
-}
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers['authorization']?.split(' ')[1];
