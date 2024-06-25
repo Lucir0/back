@@ -17,6 +17,7 @@ const getUserProfile = (req: CustomRequest , res: Response) => {
     id: user?.id,
     name: user?.name,
     email: user?.email,
+    role : user?.role,
     // Ajoute d'autres champs d'utilisateur si nécessaire
   });
 };
