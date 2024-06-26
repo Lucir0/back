@@ -10,7 +10,7 @@ export interface IUser {
   email: string;
   phone: string;
   role: string;
-  tag: string;
+  tag: string[]; // Modifier ici pour tableau de string
   creationDate: Date;
   modificationDate: Date;
   lastConnection: Date;
@@ -26,7 +26,7 @@ class User extends Model<IUser, UserCreationAttributes> implements IUser {
   public email!: string;
   public phone!: string;
   public role!: string;
-  public tag!: string;
+  public tag!: string[]; 
   public creationDate!: Date;
   public modificationDate!: Date;
   public lastConnection!: Date;
@@ -63,8 +63,9 @@ User.init({
     allowNull: false,
   },
   tag: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: false,
+    defaultValue: [] 
   },
   creationDate: {
     type: DataTypes.DATE,
