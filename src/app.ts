@@ -4,26 +4,25 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import sequelize from './config/database';
-import cors from 'cors'; // Importe le middleware CORS
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
 
-// Utilisation du middleware CORS
 app.use(cors({
-    origin: 'http://localhost:3001', // Autorise uniquement les requêtes depuis ce domaine
-    methods: ['GET', 'POST'], // Méthodes HTTP autorisées
-    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
+    origin: 'http://localhost:3001', 
+    methods: ['GET', 'POST'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
   }));
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 3000;
-
-sequelize.sync().then(() => {
+//  alter: true permet de mettre à jour la base de données en fonction des changements dans les modèles
+sequelize.sync({ }).then(() => {
   console.log('Database synchronized!');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

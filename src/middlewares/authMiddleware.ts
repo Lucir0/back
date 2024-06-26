@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import moment from 'moment-timezone';
 import userService from '../services/userService';
 import { CustomRequest } from '../types/CustomRequest';
-
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers['authorization']?.split(' ')[1];
@@ -18,6 +18,9 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
+    user.lastConnection = moment().tz('Europe/Paris').toDate();
+    await user.save();
 
     (req as CustomRequest).user = user;
     next();

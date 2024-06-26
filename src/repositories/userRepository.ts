@@ -12,8 +12,14 @@ const findAll = async () => {
   return await User.findAll();
 };
 
+// Route pour crée un utilisateur
+const create = async (user: any) => {
+  return await User.create(user);
+};
+
 export default {
   findByEmail,
   findById,
   findAll,
+  create,
 };
