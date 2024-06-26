@@ -22,6 +22,13 @@ const getUserProfile = (req: CustomRequest , res: Response) => {
   });
 };
 
+// Route pour récupérer par id un utilisateur
+const getUserById = async (req: Request, res:Response,) => {
+  const id = parseInt(req.params.id);
+  const user = await userRepository.findById(id);
+  return res.status(200).json(user);
+}
+
 // Route pour récupérer tous les utilisateurs
 const getAllUsers = async (req: Request, res: Response) => {
   const users = await userRepository.findAll();
@@ -42,7 +49,9 @@ const createUser = async (req: Request, res: Response) => {
 // Route pour modifier un utilisateur
 const updateUser = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
+  console.log('id', id);
   const user = req.body;
+  console.log('user', user);
   const existingUser = await userRepository.findById(id);
   if (!existingUser) {
     return res.status(404).json({ message: 'User not found' });
@@ -57,4 +66,5 @@ export default {
   getUserProfile,
   createUser,
   updateUser,
+  getUserById
 };

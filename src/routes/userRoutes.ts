@@ -7,6 +7,8 @@ import { CustomRequest } from '../types/CustomRequest';
 const router = Router();
 
 router.get('/', authMiddleware, (req: CustomRequest, res: Response) => userController.getUserProfile(req, res)); 
+// Route pour récupérer par id un utilisateur
+router.get('/users/:id', authMiddleware, (req: Request, res: Response) => userController.getUserById(req, res));
 // Route pour récupérer tous les utilisateurs
 router.get('/users', authMiddleware, (req: CustomRequest, res: Response) => userController.getAllUsers(req, res));
 // Route pour crée un utilisateur
