@@ -38,6 +38,16 @@ const getAllUsers = async (req: Request, res: Response) => {
 // Route pour crée un utilisateur
 const createUser = async (req: Request, res: Response) => {
   const user = req.body;
+
+  // Condition de si il y a plusieurs user envoyer en même temps les décomposer
+  if (Array.isArray(user)) {
+    const newUsers = await Promise.all(user.map(async (u) => {
+      return await userRepository.create(u);
+    }));
+    return res.status(201).json(newUsers);
+  }
+
+  console.log('user', user);
   const existingUser = await userRepository.findByEmail(user.email);
   if (existingUser) {
     return res.status(400).json({ message: 'User already exists' });
