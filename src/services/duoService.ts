@@ -1,4 +1,7 @@
+import Duo, { IDuo } from '../models/Duo';
+import { IEntreprise } from '../models/IEntreprise';
 import duoRepository from '../repositories/duoRepository';
+import userRepository from '../repositories/userRepository';
 
 class DuoService {
     async createDuo(data: any) {
@@ -19,6 +22,41 @@ class DuoService {
 
     async deleteDuo(id: number) {
         return await duoRepository.deleteDuo(id);
+    }
+
+    async createDuoIfNecessary(entreprise: IEntreprise): Promise<void> {
+        const userIds = entreprise.userId;
+        console.log("userIds", userIds);
+
+        // Vérifier s'il y a un id d'alternant et un id de tuteur dans userIds
+        const alternantId = await userRepository.findAlternantId(userIds);
+        console.log("alternantId", alternantId);
+        const tuteurId = await userRepository.findTuteurId(userIds);
+        console.log("tuteurId", tuteurId);
+        
+        if (alternantId && tuteurId) {
+            // Trouver l'id du suiveur (par exemple, prenons le premier utilisateur qui n'est ni alternant ni tuteur)
+            const suiveurId = userIds.find(id => id !== alternantId && id !== tuteurId);
+            console.log("suiveurId", suiveurId);
+            
+            // Créer le duo avec les ids trouvés
+            const duoAttributes: IDuo = {
+                idAlternant: alternantId,
+                idTuteur: tuteurId,
+                idSuiveur: suiveurId || 0, // Mettez une valeur par défaut si aucun suiveur n'est trouvé
+                enterpriseName: entreprise.name,
+                isEnterpriseRecruit: false, // À définir selon votre logique
+                trialPeriodMeeting: false,
+                midTermMeeting: false,
+                yearEndMeeting: false,
+                creationDate: new Date()
+            };
+            console.log("duoAttributes", duoAttributes);
+            
+            // Appeler la méthode pour créer le duo
+            await this.createDuo(duoAttributes);
+            console.log("Duo créé avec succès");
+        }
     }
 }
 

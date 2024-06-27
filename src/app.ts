@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
-import duoRoutes from './routes/duoRoutes';  // Ajout des routes duo
+import entreprisesRoutes from './routes/entreprisesRoutes';
+import duoRoutes from './routes/duoRoutes';
 import sequelize from './config/database';
 import cors from 'cors';
 
@@ -20,12 +21,13 @@ app.use(cors({
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/duos', duoRoutes);  // Utilisation des routes duo à /api/duos
+app.use('/api/duos', duoRoutes);
+app.use('/api/entreprises', entreprisesRoutes);
 
 const PORT = process.env.PORT || 3000;
 
 // alter: true permet de mettre à jour la base de données en fonction des changements dans les modèles
-sequelize.sync({ }).then(() => {
+sequelize.sync({}).then(() => {
   console.log('Database synchronized!');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -17,9 +17,32 @@ const create = async (user: any) => {
   return await User.create(user);
 };
 
+// findAlternantId
+const findAlternantId = async (userIds: number[]): Promise<number | undefined> => {
+  const alternant = await User.findOne({
+      where: {
+          id: userIds,
+          role: 'Alternant'
+      }
+  });
+  return alternant?.id;
+};
+
+const findTuteurId = async (userIds: number[]): Promise<number | undefined> => {
+  const tuteur = await User.findOne({
+      where: {
+          id: userIds,
+          role: 'Tuteur' 
+      }
+  });
+  return tuteur?.id;
+};
+
 export default {
   findByEmail,
   findById,
   findAll,
   create,
+  findAlternantId,
+  findTuteurId,
 };

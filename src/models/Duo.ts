@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
 
-interface IDuoAttributes {
+export interface IDuo {
     idDuo?: number;
     idAlternant: number;
     idTuteur: number;
@@ -14,9 +14,9 @@ interface IDuoAttributes {
     creationDate?: Date;
 }
 
-interface IDuoCreationAttributes extends Optional<IDuoAttributes, 'idDuo'> {}
+interface IDuoCreationAttributes extends Optional<IDuo, 'idDuo'> {}
 
-class Duo extends Model<IDuoAttributes, IDuoCreationAttributes> implements IDuoAttributes {
+class Duo extends Model<IDuo, IDuoCreationAttributes> implements IDuo {
     public idDuo!: number;
     public idAlternant!: number;
     public idTuteur!: number;
