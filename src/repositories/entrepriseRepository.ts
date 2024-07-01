@@ -42,9 +42,22 @@ const findById = async (id: number) => {
     }
 }
 
+const deleteEntreprise = async (id: number) => {
+    const entreprise = await findById(id);
+    try {
+        if (entreprise) {
+            await entreprise.destroy();
+        }
+        return entreprise;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
     findAll,
     create,
     update,
-    findById
+    findById,
+    deleteEntreprise
 };

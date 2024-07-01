@@ -13,4 +13,7 @@ router.put("/:id", authMiddleware, (req, res) => entreprisesController.updateEnt
 // route pour récupérer une entreprise par son id
 router.get("/:id", authMiddleware, (req, res) => entreprisesController.getEntrepriseById(req, res));
 
+// Route pour supprimer une entreprise
+router.delete("/:id", authMiddleware, (req, res) => entreprisesController.deleteEntreprise(req, res));
+
 export default router;

@@ -1,6 +1,8 @@
 import userRepository from '../repositories/userRepository';
 import { Request, Response } from 'express';
 import { CustomRequest } from '../types/CustomRequest';
+import { generateRandomPassword } from '../utils/passwordGenerator';
+import userService from '../services/userService';
 
 
 const getUserByEmail = async (email: string) => {
@@ -18,7 +20,6 @@ const getUserProfile = (req: CustomRequest , res: Response) => {
     name: user?.name,
     email: user?.email,
     role : user?.role,
-    // Ajoute d'autres champs d'utilisateur si nécessaire
   });
 };
 
@@ -39,9 +40,11 @@ const getAllUsers = async (req: Request, res: Response) => {
 const createUser = async (req: Request, res: Response) => {
   const user = req.body;
 
-  // Condition de si il y a plusieurs user envoyer en même temps les décomposer
   if (Array.isArray(user)) {
     const newUsers = await Promise.all(user.map(async (u) => {
+      if (!u.password) {
+        u.password = generateRandomPassword();
+      }
       return await userRepository.create(u);
     }));
     return res.status(201).json(newUsers);
@@ -52,6 +55,11 @@ const createUser = async (req: Request, res: Response) => {
   if (existingUser) {
     return res.status(400).json({ message: 'User already exists' });
   }
+
+  if (!user.password) {
+    user.password = generateRandomPassword();
+  }
+
   const newUser = await userRepository.create(user);
   return res.status(201).json(newUser);
 };
@@ -70,11 +78,27 @@ const updateUser = async (req: Request, res: Response) => {
   return res.status(200).json(existingUser);
 };
 
+// controler delete user 
+const deleteUser = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.id);
+
+  try {
+    const deletedUser = await userService.deleteUser(userId);
+    if (deletedUser === undefined) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    return res.status(200).json({ message: 'User soft deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'An error occurred', error });
+  }
+};
+
 export default {
   getUserByEmail,
   getAllUsers,
   getUserProfile,
   createUser,
   updateUser,
-  getUserById
+  getUserById,
+  deleteUser,
 };

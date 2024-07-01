@@ -20,7 +20,6 @@ const createEntreprise = async (req: Request, res: Response) => {
 
 const updateEntreprise = async (req: CustomRequest, res: Response) => {
   try {
-    // Extraire et convertir l'ID en nombre entier
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {
       return res.status(400).json({ message: "Invalid ID" });
@@ -46,10 +45,23 @@ const getEntrepriseById = async (req: Request, res: Response) => {
   return res.status(200).json(entreprise);
 }
 
+// Route pour supprimer une entreprise
+const deleteEntreprise = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  try{
+    await entrepriseService.deleteEntreprise(id);
+    return res.status(204).end();
+  } catch (error) {
+    console.error("Error deleting entreprise:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 
 export default {
     getAllEntreprises,
     createEntreprise,
     updateEntreprise,
-    getEntrepriseById
+    getEntrepriseById,
+    deleteEntreprise
   };

@@ -38,6 +38,23 @@ const findTuteurId = async (userIds: number[]): Promise<number | undefined> => {
   return tuteur?.id;
 };
 
+// Repository pour supprimer un utilisateur 
+const deleteUser = async (id: number) => {
+  const user = await findById(id);
+  if (user) {
+    user.name = '[Utilisateur Supprimé]';
+    user.lastname = '[Utilisateur Supprimé]';
+    user.password = '[Utilisateur Supprimé]';
+    user.email = '[Utilisateur Supprimé]';
+    user.phone = '[Utilisateur Supprimé]';
+    user.role = '[Utilisateur Supprimé]';
+    user.tag = ['[Utilisateur Supprimé]'];
+    await user.save();
+    return user;
+  }
+  return null;
+};
+
 export default {
   findByEmail,
   findById,
@@ -45,4 +62,5 @@ export default {
   create,
   findAlternantId,
   findTuteurId,
+  deleteUser, 
 };

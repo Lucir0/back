@@ -15,5 +15,6 @@ router.get('/users', authMiddleware, (req: CustomRequest, res: Response) => user
 router.post('/users', authMiddleware, (req: Request, res: Response) => userController.createUser(req, res));
 // Route pour modifier un utilisateur
 router.put('/users/:id',authMiddleware, (req: Request, res: Response) => userController.updateUser(req, res));
-
+// Route pour supprimer un utilisateur 
+router.delete('/users/:id',authMiddleware, (req: Request, res: Response) => userController.deleteUser(req, res));
 export default router;

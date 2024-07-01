@@ -14,10 +14,20 @@ const getAllUsers = async (req: Request, res: Response) => {
   return res.status(200).json(users);
 };
 
+// service pour supprimer un utilisateur
+const deleteUser = async (id : number) => {
+  const user = await userRepository.findById(id);
+  if (!user) {
+    return null;
+  }
+  return await userRepository.deleteUser(id);
+};
+
 
 
 export default {
   getUserByEmail,
   getUserById,
   getAllUsers,
+  deleteUser
 };

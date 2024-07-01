@@ -7,6 +7,11 @@ const getEntrepriseById = async (id: number) => {
     return await entrepriseRepository.findById(id);
 }
 
+const deleteEntreprise = async (id: number) => {
+    return await entrepriseRepository.deleteEntreprise(id);
+}
+
 export default {
-    getEntrepriseById
+    getEntrepriseById,
+    deleteEntreprise,
 };
