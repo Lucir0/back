@@ -17,4 +17,8 @@ router.post('/users', authMiddleware, (req: Request, res: Response) => userContr
 router.put('/users/:id',authMiddleware, (req: Request, res: Response) => userController.updateUser(req, res));
 // Route pour supprimer un utilisateur 
 router.delete('/users/:id',authMiddleware, (req: Request, res: Response) => userController.deleteUser(req, res));
+
+// Route pour récupérer tous les duo attaché à un user de role suiveur
+router.get('/users/:id/duos', authMiddleware, (req: Request, res: Response) => userController.getDuosWhitUserId(req, res));
+
 export default router;

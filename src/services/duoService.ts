@@ -65,6 +65,18 @@ class DuoService {
             }
         }
     }
+
+    async getDuoWithSuiveurIdAndTrialPeriodMeetingFalse(id: number) {
+        return await duoRepository.getDuoWithSuiveurIdAndTrialPeriodMeetingFalse(id);
+    }
+
+    async getDuoWithSuiveurIdAndMidTermMeetingFalse(id: number) {
+        return await duoRepository.getDuoWithSuiveurIdAndMidTermMeetingFalse(id);
+    }
+
+    async getDuoWithSuiveurIdAndYearEndMeetingFalse(id: number) {
+        return await duoRepository.getDuoWithSuiveurIdAndYearEndMeetingFalse(id);
+    }
     
 }
 

@@ -82,6 +82,31 @@ class DuoController {
             }
         }
     }
+
+    async getDuoWithSuiveurIdAndPeriodMeetingFalse(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const duoTrialPeriod = await duoService.getDuoWithSuiveurIdAndTrialPeriodMeetingFalse(id);
+            const duoMiPeriod = await duoService.getDuoWithSuiveurIdAndMidTermMeetingFalse(id);
+            const duoYearPeriod = await duoService.getDuoWithSuiveurIdAndYearEndMeetingFalse(id);
+            const duo ={
+                duoTrialPeriod,
+                duoMiPeriod,
+                duoYearPeriod
+            }
+            if (duo) {
+                res.status(200).json(duo);
+            } else {
+                res.status(404).json({ error: 'Duo not found' });
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unknown error occurred' });
+            }
+        }
+    }
 }
 
 export default new DuoController();

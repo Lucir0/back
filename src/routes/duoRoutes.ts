@@ -20,4 +20,7 @@ router.put('/:id', authMiddleware, (req: Request, res: Response) => duoControlle
 // Route pour supprimer un duo par ID
 router.delete('/:id', authMiddleware, (req: Request, res: Response) => duoController.deleteDuo(req, res));
 
+// Route pour récupérer un duo avec un user de role suiveur et qui trialPeriodMeeting est false
+router.get('/duos/suiveur/:id/trialPeriodMeeting', authMiddleware, (req: Request, res: Response) => duoController.getDuoWithSuiveurIdAndPeriodMeetingFalse(req, res));
+
 export default router;

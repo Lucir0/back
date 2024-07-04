@@ -1,66 +1,66 @@
+import Duo from '../models/Duo';
 import { User } from '../models/IUser';
 
-const findByEmail = async (email: string) => {
-  return await User.findOne({ where: { email } });
-};
-
-const findById = async (id: number) => {
-  return await User.findByPk(id);
-}
-// Route pour récupérer tous les utilisateurs
-const findAll = async () => {
-  return await User.findAll();
-};
-
-// Route pour crée un utilisateur
-const create = async (user: any) => {
-  return await User.create(user);
-};
-
-// findAlternantId
-const findAlternantId = async (userIds: number[]): Promise<number | undefined> => {
-  const alternant = await User.findOne({
-      where: {
-          id: userIds,
-          role: 'Alternant'
-      }
-  });
-  return alternant?.id;
-};
-
-const findTuteurId = async (userIds: number[]): Promise<number | undefined> => {
-  const tuteur = await User.findOne({
-      where: {
-          id: userIds,
-          role: 'Tuteur' 
-      }
-  });
-  return tuteur?.id;
-};
-
-// Repository pour supprimer un utilisateur 
-const deleteUser = async (id: number) => {
-  const user = await findById(id);
-  if (user) {
-    user.name = '[Utilisateur Supprimé]';
-    user.lastname = '[Utilisateur Supprimé]';
-    user.password = '[Utilisateur Supprimé]';
-    user.email = '[Utilisateur Supprimé]';
-    user.phone = '[Utilisateur Supprimé]';
-    user.role = '[Utilisateur Supprimé]';
-    user.tag = ['[Utilisateur Supprimé]'];
-    await user.save();
-    return user;
+class UserRepository {
+  static async findByEmail(email: string) {
+    return await User.findOne({ where: { email } });
   }
-  return null;
-};
 
-export default {
-  findByEmail,
-  findById,
-  findAll,
-  create,
-  findAlternantId,
-  findTuteurId,
-  deleteUser, 
-};
+  static async findById(id: number) {
+    return await User.findByPk(id);
+  }
+
+  static async findAll() {
+    return await User.findAll();
+  }
+
+  static async create(user: any) {
+    return await User.create(user);
+  }
+
+  static async findAlternantId(userIds: number[]): Promise<number | undefined> {
+    const alternant = await User.findOne({
+      where: {
+        id: userIds,
+        role: 'Alternant'
+      }
+    });
+    return alternant?.id;
+  }
+
+  static async findTuteurId(userIds: number[]): Promise<number | undefined> {
+    const tuteur = await User.findOne({
+      where: {
+        id: userIds,
+        role: 'Tuteur'
+      }
+    });
+    return tuteur?.id;
+  }
+
+  static async deleteUser(id: number) {
+    const user = await this.findById(id);
+    if (user) {
+      user.name = '[Utilisateur Supprimé]';
+      user.lastname = '[Utilisateur Supprimé]';
+      user.password = '[Utilisateur Supprimé]';
+      user.email = '[Utilisateur Supprimé]';
+      user.phone = '[Utilisateur Supprimé]';
+      user.role = '[Utilisateur Supprimé]';
+      user.tag = ['[Utilisateur Supprimé]'];
+      await user.save();
+      return user;
+    }
+    return null;
+  }
+
+  static async findDuosWithUserId(id: number) {
+    return await Duo.findAll({
+      where: {
+        idSuiveur: id
+      }
+    });
+  }
+}
+
+export default UserRepository;

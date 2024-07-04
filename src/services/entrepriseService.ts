@@ -1,17 +1,13 @@
-// fait comme un service transmet l'information au repository
-
 import entrepriseRepository from "../repositories/entrepriseRepository";
 
-
-const getEntrepriseById = async (id: number) => {
+class EntrepriseService {
+  static async getEntrepriseById(id: number) {
     return await entrepriseRepository.findById(id);
-}
+  }
 
-const deleteEntreprise = async (id: number) => {
+  static async deleteEntreprise(id: number) {
     return await entrepriseRepository.deleteEntreprise(id);
+  }
 }
 
-export default {
-    getEntrepriseById,
-    deleteEntreprise,
-};
+export default EntrepriseService;

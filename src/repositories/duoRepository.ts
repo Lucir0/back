@@ -28,6 +28,34 @@ class DuoRepository {
         }
         return null;
     }
+
+    async getDuoWithSuiveurIdAndTrialPeriodMeetingFalse(id: number) {
+        return await Duo.findAll({
+            where: {
+                idSuiveur: id,
+                trialPeriodMeeting: false
+            }
+        });
+    }
+
+    async getDuoWithSuiveurIdAndMidTermMeetingFalse(id: number) {
+        return await Duo.findAll({
+            where: {
+                idSuiveur: id,
+                midTermMeeting: false
+            }
+        });
+    }
+
+    async getDuoWithSuiveurIdAndYearEndMeetingFalse(id: number) {
+        return await Duo.findAll({
+            where: {
+                idSuiveur: id,
+                yearEndMeeting: false
+            }
+        });
+    }
+    
 }
 
 export default new DuoRepository();
