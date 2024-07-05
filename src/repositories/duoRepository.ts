@@ -1,4 +1,14 @@
 import Duo from '../models/Duo';
+import { User } from '../models/IUser';
+
+
+Duo.belongsTo(User, { as: 'Alternant', foreignKey: 'idAlternant' });
+Duo.belongsTo(User, { as: 'Tuteur', foreignKey: 'idTuteur' });
+Duo.belongsTo(User, { as: 'Suiveur', foreignKey: 'idSuiveur' });
+
+User.hasMany(Duo, { foreignKey: 'idAlternant' });
+User.hasMany(Duo, { foreignKey: 'idTuteur' });
+User.hasMany(Duo, { foreignKey: 'idSuiveur' });
 
 class DuoRepository {
     async createDuo(data: any) {
@@ -6,7 +16,13 @@ class DuoRepository {
     }
 
     async getAllDuos() {
-        return await Duo.findAll();
+        return await Duo.findAll({
+            include: [
+                { model: User, as: 'Alternant' },
+                { model: User, as: 'Tuteur' },
+                { model: User, as: 'Suiveur' }
+            ]
+        });
     }
 
     async getDuoById(id: number) {
@@ -19,6 +35,16 @@ class DuoRepository {
             return await duo.update(data);
         }
         return null;
+    }
+
+    async updateDuos(data: any) {
+        return await Duo.update(data, {
+            where: {
+                idAlternant: data.idAlternant,
+                idTuteur: data.idTuteur,
+                idSuiveur: data.idSuiveur
+            }
+        });
     }
 
     async deleteDuo(id: number) {
@@ -55,6 +81,42 @@ class DuoRepository {
             }
         });
     }
+
+    async findDuoByUserIds(alternantId: number, tuteurId: number, suiveurId: number){
+        return await Duo.findOne({
+            where: {
+                idAlternant: alternantId,
+                idTuteur: tuteurId,
+                idSuiveur: suiveurId
+            }
+        });
+    }
+
+    async getDuosBySuiveurId(id: number) {
+        return await Duo.findAll({
+            where: {
+                idSuiveur: id
+            },
+            include: [
+                {
+                    model: User,
+                    as: 'Alternant',
+                    attributes: ['id', 'name', 'lastname', 'email']
+                },
+                {
+                    model: User,
+                    as: 'Tuteur',
+                    attributes: ['id', 'name', 'lastname', 'email']
+                },
+                {
+                    model: User,
+                    as: 'Suiveur',
+                    attributes: ['id', 'name', 'lastname', 'email']
+                }
+            ]
+        });
+    }
+    
     
 }
 

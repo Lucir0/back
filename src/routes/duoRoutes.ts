@@ -23,4 +23,7 @@ router.delete('/:id', authMiddleware, (req: Request, res: Response) => duoContro
 // Route pour récupérer un duo avec un user de role suiveur et qui trialPeriodMeeting est false
 router.get('/duos/suiveur/:id/trialPeriodMeeting', authMiddleware, (req: Request, res: Response) => duoController.getDuoWithSuiveurIdAndPeriodMeetingFalse(req, res));
 
+// Route pour récupérer les duos attribués à un suiveur
+router.get('/suiveur/:id/duos', authMiddleware, (req: Request, res: Response) => duoController.getDuosBySuiveurId(req, res));
+
 export default router;
