@@ -99,6 +99,22 @@ class UserController {
     const duos = await userService.findDuosWithUserId(userId);
     return res.status(200).json(duos);
   }
+
+  // Route pour mofifier le mot de passe d'un utilisateur
+  static async updatePassword(req: Request, res: Response) {
+    const userId = parseInt(req.params.id);
+    const { oldPassword, newPassword } = req.body;
+    console.log('userId', userId, 'oldPassword', oldPassword, 'newPassword', newPassword);
+    try {
+      const updatedUser = await userService.updatePassword(userId, newPassword, oldPassword);
+      if (updatedUser === undefined) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      return res.status(200).json(updatedUser);
+    } catch (error) {
+      return res.status(500).json({ message: 'An error occurred', error });
+    }
+  }
 }
 
 export default UserController;

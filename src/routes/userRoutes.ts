@@ -21,4 +21,7 @@ router.delete('/users/:id',authMiddleware, (req: Request, res: Response) => user
 // Route pour récupérer tous les duo attaché à un user de role suiveur
 router.get('/users/:id/duos', authMiddleware, (req: Request, res: Response) => userController.getDuosWhitUserId(req, res));
 
+// Route pour mofifier le mot de passe d'un utilisateur
+router.put('/users/:id/password', authMiddleware, (req: Request, res: Response) => userController.updatePassword(req, res));
+
 export default router;
