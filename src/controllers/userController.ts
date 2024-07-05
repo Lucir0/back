@@ -3,6 +3,7 @@ import userRepository from '../repositories/userRepository';
 import userService from '../services/userService';
 import { CustomRequest } from '../types/CustomRequest';
 import { generateRandomPassword } from '../utils/passwordGenerator';
+import { sendPasswordEmail } from '../services/emailService';
 
 class UserController {
   static async getUserByEmail(email: string) {
@@ -46,7 +47,6 @@ class UserController {
       return res.status(201).json(newUsers);
     }
 
-    console.log('user', user);
     const existingUser = await userRepository.findByEmail(user.email);
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
@@ -56,8 +56,15 @@ class UserController {
       user.password = generateRandomPassword();
     }
 
-    const newUser = await userRepository.create(user);
-    return res.status(201).json(newUser);
+    try {
+      const newUser = await userRepository.create(user);
+      await sendPasswordEmail(user.email, user.password); 
+
+      return res.status(201).json(newUser);
+    } catch (error) {
+      console.error('Error creating user:', error);
+      return res.status(500).json({ message: 'Error creating user' });
+    }
   }
 
   static async updateUser(req: Request, res: Response) {
