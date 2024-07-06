@@ -63,9 +63,9 @@ User.init({
     allowNull: false,
   },
   tag: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false,
-    defaultValue: [] 
+    type: DataTypes.JSON,
+        allowNull: false,
+        defaultValue: []
   },
   creationDate: {
     type: DataTypes.DATE,

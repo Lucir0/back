@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import entreprisesRoutes from './routes/entreprisesRoutes';
 import duoRoutes from './routes/duoRoutes';
+import meetingRoutes from './routes/meetingRoutes';
 import sequelize from './config/database';
 import cors from 'cors';
 
@@ -23,6 +24,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/duos', duoRoutes);
 app.use('/api/entreprises', entreprisesRoutes);
+app.use('/api/meetings', meetingRoutes);
 
 const PORT = process.env.PORT || 3000;
 
