@@ -34,6 +34,10 @@ class UserService {
     return await userRepository.updatePassword(id, password, oldPassword);
   }
 
+  static async getAllAlternantsandTuteur() {
+    return await userRepository.getAllAlternantsandTuteur();
+  }
+
 }
 
 export default UserService;

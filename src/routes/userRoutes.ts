@@ -24,4 +24,7 @@ router.get('/users/:id/duos', authMiddleware, (req: Request, res: Response) => u
 // Route pour mofifier le mot de passe d'un utilisateur
 router.put('/users/:id/password', authMiddleware, (req: Request, res: Response) => userController.updatePassword(req, res));
 
+// Route pour récupérer tous les alternants et tous les suiveurs
+router.get('/users/alternants/tuteur', authMiddleware, (req: Request, res: Response) => userController.getAllAlternantsandTuteur(req, res));
+
 export default router;

@@ -74,6 +74,14 @@ class UserRepository {
       throw new Error('User not found or password incorrect');
     }
   }
+
+  static async getAllAlternantsandTuteur() {
+    return await User.findAll({
+      where: {
+        role: 'Alternant' && 'Tuteur'
+      }
+    });
+  }
   
 }
 

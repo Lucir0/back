@@ -115,6 +115,12 @@ class UserController {
       return res.status(500).json({ message: 'An error occurred', error });
     }
   }
+
+  static async getAllAlternantsandTuteur(req: Request, res: Response){
+    const users = await userService.getAllAlternantsandTuteur();
+    return res.status(200).json(users);
+  };
+
 }
 
 export default UserController;
