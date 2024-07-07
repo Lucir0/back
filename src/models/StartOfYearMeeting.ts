@@ -3,6 +3,7 @@ import sequelize from '../config/database';
 
 export interface IStartOfYearMeeting {
   id?: number;
+  duoId: number; // Ajoutez cette ligne
   studentId: string;
   studentName: string;
   studentFirstName: string;
@@ -28,6 +29,7 @@ interface IStartOfYearMeetingCreationAttributes extends Optional<IStartOfYearMee
 
 class StartOfYearMeeting extends Model<IStartOfYearMeeting, IStartOfYearMeetingCreationAttributes> implements IStartOfYearMeeting {
   public id!: number;
+  public duoId!: number;  // Ajoutez cette ligne
   public studentId!: string;
   public studentName!: string;
   public studentFirstName!: string;
@@ -54,6 +56,10 @@ StartOfYearMeeting.init({
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  duoId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   studentId: {
     type: DataTypes.STRING,

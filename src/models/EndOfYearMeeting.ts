@@ -3,6 +3,7 @@ import sequelize from '../config/database';
 
 export interface IEndOfYearMeeting {
   id?: number;
+  duoId: number;
   studentId: string;
   studentName: string;
   studentFirstName: string;
@@ -27,6 +28,7 @@ interface IEndOfYearMeetingCreationAttributes extends Optional<IEndOfYearMeeting
 
 class EndOfYearMeeting extends Model<IEndOfYearMeeting, IEndOfYearMeetingCreationAttributes> implements IEndOfYearMeeting {
   public id!: number;
+  public duoId!: number;  // Ajoutez cette ligne
   public studentId!: string;
   public studentName!: string;
   public studentFirstName!: string;
@@ -52,6 +54,10 @@ EndOfYearMeeting.init({
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  duoId: {  // Ajoutez cette ligne
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   studentId: {
     type: DataTypes.STRING,

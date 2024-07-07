@@ -29,7 +29,7 @@ app.use('/api/meetings', meetingRoutes);
 const PORT = process.env.PORT || 3000;
 
 // alter: true permet de mettre à jour la base de données en fonction des changements dans les modèles
-sequelize.sync({}).then(() => {
+sequelize.sync({alter: true}).then(() => {
   console.log('Database synchronized!');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
