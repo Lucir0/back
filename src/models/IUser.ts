@@ -63,8 +63,8 @@ User.init({
     allowNull: false,
   },
   tag: {
-    type: DataTypes.JSON,
-        allowNull: false,
+    type: DataTypes.JSON || null,
+        allowNull: true,
         defaultValue: []
   },
   creationDate: {

@@ -26,4 +26,10 @@ router.get('/duos/suiveur/:id/trialPeriodMeeting', authMiddleware, (req: Request
 // Route pour récupérer les duos attribués à un suiveur
 router.get('/suiveur/:id/duos', authMiddleware, (req: Request, res: Response) => duoController.getDuosBySuiveurId(req, res));
 
+// Route pour récupérer les duos d'une entreprise
+router.get('/entreprise/:id/duos', authMiddleware, (req: Request, res: Response) => duoController.getDuosByEntrepriseId(req, res));
+
+// Route pour modifier les champs Alternant, Tuteur et Suiveur d'un duo
+router.put('/:id/users', authMiddleware, (req: Request, res: Response) => duoController.updateDuoUsers(req, res));
+
 export default router;

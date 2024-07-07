@@ -1,4 +1,5 @@
 import Duo from '../models/Duo';
+import Entreprise from '../models/IEntreprise';
 import { User } from '../models/IUser';
 
 
@@ -50,6 +51,7 @@ class DuoRepository {
     async deleteDuo(id: number) {
         const duo = await Duo.findByPk(id);
         if (duo) {
+            console.log("duo suppimé avec succès", duo);
             return await duo.destroy();
         }
         return null;
@@ -116,8 +118,42 @@ class DuoRepository {
             ]
         });
     }
-    
-    
+
+    async deleteDuoById(duoId: number) {
+        return await Duo.destroy({
+            where: {
+                idDuo: duoId
+            }
+        });
+    }
+
+    async findDuosByEnterpriseName(enterpriseName: string) {
+        return await Entreprise.findAll({
+            where: {
+                name: enterpriseName
+            }
+        });
+    }
+
+    async getDuosByEntrepriseId(id: number) {
+       const entreprise = await Entreprise.findByPk(id);
+         if (entreprise) {
+              return await Duo.findAll({
+                where: {
+                     enterpriseName: entreprise.name
+                }
+              });
+         }
+    }
+
+    async updateDuoUsers(id: number, data: any) {
+        const duo = await Duo.findByPk(id);
+        if (duo) {
+            return await duo.update(data);
+        }
+        return null;
+    }
+
 }
 
 export default new DuoRepository();
