@@ -24,9 +24,6 @@ class EntrepriseRepository {
   static async update(entreprise: Entreprise, id: any) {
     console.log("entrepriseRepository.update", entreprise);
     try {
-      if (entreprise) {
-        await duoService.createOrUpdateDuoIfNecessary(entreprise);
-      }
       return await Entreprise.update(entreprise, {
         where: {
           id: id

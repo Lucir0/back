@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { exportUsersToExcel } from '../controllers/exportController';
-import authMiddleware from '../middlewares/authMiddleware'; // Importer depuis le bon chemin
+import authMiddleware from '../middlewares/authMiddleware'; 
 
 const router = Router();
 
-router.get('/export', authMiddleware, exportUsersToExcel);
+router.get('/export', authMiddleware,  (req: Request, res: Response) => exportUsersToExcel(req, res));
 
 export default router;
