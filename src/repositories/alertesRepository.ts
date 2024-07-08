@@ -1,12 +1,13 @@
-import Alertes from "../models/IAlertes";
+import Alertes from '../models/IAlertes';
 
-class alertesRepository {
+class AlertesRepository {
+  async getAllAlertes() {
+    return await Alertes.findAll();
+  }
 
-    static async getAllAlertes(){
-        return await Alertes.findAll();
-    }
-        
-  
+  async getAlertesByUserId(userId: number) {
+    return await Alertes.findAll({ where: { alternantId: userId } });
+  }
 }
 
-export default alertesRepository;
+export default new AlertesRepository();

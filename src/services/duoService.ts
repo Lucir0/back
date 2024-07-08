@@ -97,6 +97,10 @@ class DuoService {
     async updateDuoUsers(id: number, data: any) {
         return await duoRepository.updateDuoUsers(id, data);
     }
+
+    async getDuosByUserId(userId: number) {
+        return await duoRepository.findAll({ where: { idAlternant: userId } });
+      }
     
 }
 

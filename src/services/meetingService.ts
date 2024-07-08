@@ -50,6 +50,13 @@ class MeetingService {
   async getEndOfYearMeetingByStudentId(studentId: string) {
     return await meetingRepository.getEndOfYearMeetingByStudentId(studentId);
   }
+  
+  async getMeetingsByUserId(studentId: string) {
+    const endOfYear = await meetingRepository.getEndOfYearMeetingByStudentId(studentId);
+    const midTerm = await meetingRepository.getMidTermMeetingByStudentId(studentId);
+    const startOfYear = await meetingRepository.getStartOfYearMeetingByStudentId(studentId);
+    return { endOfYear, midTerm, startOfYear };
+  }
 }
 
 export default new MeetingService();

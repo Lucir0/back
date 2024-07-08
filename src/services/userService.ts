@@ -27,7 +27,7 @@ class UserService {
     return await userRepository.findDuosWithUserId(id);
   }
 
-  static async updatePassword(id: number, password: string, oldPassword : string) {
+  static async updatePassword(id: number, password: string, oldPassword: string) {
     if (!id) {
       return null;
     }
@@ -38,6 +38,9 @@ class UserService {
     return await userRepository.getAllAlternantsandTuteur();
   }
 
+  static async getAllAlternants() {
+    return await userRepository.findAllAlternants(); // Appel correct de la méthode du repository
+  }
 }
 
 export default UserService;

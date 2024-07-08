@@ -1,6 +1,5 @@
-import e from 'express';
-import Duo from '../models/Duo';
-import { User } from '../models/IUser';
+import { User } from '../models/IUser'; // Assurez-vous d'importer correctement le modèle User
+import Duo from '../models/Duo'; // Importer le modèle Duo
 
 class UserRepository {
   static async findByEmail(email: string) {
@@ -78,11 +77,14 @@ class UserRepository {
   static async getAllAlternantsandTuteur() {
     return await User.findAll({
       where: {
-        role: 'Alternant' && 'Tuteur'
+        role: ['Alternant', 'Tuteur'] // Use array to match either role
       }
     });
   }
-  
+
+  static async findAllAlternants() {
+    return await User.findAll({ where: { role: 'Alternant' } });
+  }
 }
 
 export default UserRepository;
